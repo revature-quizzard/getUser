@@ -1,4 +1,4 @@
-package com.revature.repos;
+package com.revature.get_user;
 
 public class UserRepository {
 
