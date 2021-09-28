@@ -1,6 +1,7 @@
-package com.revature.models;
+package com.revature.get_user;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @DynamoDBTable(tableName = "Users")
 public class User {
 
+    @DynamoDBHashKey
     @DynamoDBAttribute
     private String id;
 
@@ -18,16 +20,13 @@ public class User {
     private String username;
 
     @DynamoDBAttribute
-    private String email;
+    private List<Object> favoriteSets;
 
     @DynamoDBAttribute
-    private String name;
+    private List<Object> createdSets;
 
     @DynamoDBAttribute
-    private List<String> favoriteSets;
-
-    @DynamoDBAttribute
-    private List<String> createdSets;
+    private String profilePicture;
 
     @DynamoDBAttribute
     private int points;
@@ -39,7 +38,7 @@ public class User {
     private int losses;
 
     @DynamoDBAttribute
-    private LocalDateTime registrationDate;
+    private String registrationDate;
 
     @DynamoDBAttribute
     private List<String> gameRecord;
