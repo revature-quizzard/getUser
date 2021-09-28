@@ -6,7 +6,7 @@ Resources:
   GetUserFx:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/getUser-1.0-SNAPSHOT.jar
+      CodeUri: target/get_user_fx-1.0-SNAPSHOT.jar
       Handler: com.revature.get_user.GetUserHandler
       Runtime: java8.al2
       Description: Java function
