@@ -1,16 +1,17 @@
+# SAM template for CodeBuild
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
-Description: A simple AWS Lambda for uploading user profile images.
+Description: A simple AWS Lambda for retrieving information from the Users DynamnoDB table.
 Resources:
-FetchUsersFunctionFx:
+  GetUserFx:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: target/post_profile_picture-1.0.jar
-      Handler: com.revature.post_profile_image.ProfilePictureUploadHandler
+      CodeUri: target/get_user_fx-1.0-SNAPSHOT.jar
+      Handler: com.revature.get_user.GetUserHandler
       Runtime: java8.al2
       Description: Java function
       MemorySize: 256
       Timeout: 30
       Tracing: Active
       Policies:
-        - <YOUR_POLICY_HERE>
+        - arn:aws:iam::011217676466:policy/dynamodb-readonly-users
