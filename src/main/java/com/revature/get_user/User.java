@@ -20,16 +20,13 @@ public class User {
     private String username;
 
     @DynamoDBAttribute
-    private String email;
+    private List<Object> favoriteSets;
 
     @DynamoDBAttribute
-    private String name;
+    private List<Object> createdSets;
 
     @DynamoDBAttribute
-    private List<String> favoriteSets;
-
-    @DynamoDBAttribute
-    private List<String> createdSets;
+    private String profilePicture;
 
     @DynamoDBAttribute
     private int points;
@@ -41,7 +38,7 @@ public class User {
     private int losses;
 
     @DynamoDBAttribute
-    private LocalDateTime registrationDate;
+    private String registrationDate;
 
     @DynamoDBAttribute
     private List<String> gameRecord;
