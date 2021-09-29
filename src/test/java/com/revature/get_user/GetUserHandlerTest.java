@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.revature.get_user.stubs.TestLogger;
 import org.junit.jupiter.api.*;
+import software.amazon.awssdk.http.HttpStatusCode;
 
 import java.util.*;
 
@@ -79,6 +80,24 @@ public class GetUserHandlerTest {
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
         verify(mockUserRepository, times(1)).findUserById(anyString());
+        assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void given_invalidId_handlerReturnsBadRequest() {
+        APIGatewayProxyRequestEvent mockRequestEvent = new APIGatewayProxyRequestEvent();
+        mockRequestEvent.withPath("/users");
+        mockRequestEvent.withHttpMethod("GET");
+        mockRequestEvent.withHeaders(null);
+        mockRequestEvent.withBody(null);
+        mockRequestEvent.withQueryStringParameters(Collections.singletonMap("id", "invalid"));
+
+        APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
+        expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+
+        APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
+
+        verify(mockUserRepository, times(0));
         assertEquals(expectedResponse, actualResponse);
     }
 }
