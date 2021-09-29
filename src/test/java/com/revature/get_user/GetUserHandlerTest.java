@@ -92,12 +92,32 @@ public class GetUserHandlerTest {
         mockRequestEvent.withBody(null);
         mockRequestEvent.withQueryStringParameters(Collections.singletonMap("id", "invalid"));
 
+        when(mockUserRepository.findUserById(anyString())).thenReturn(null);
+
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
         expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
-        verify(mockUserRepository, times(0));
+        verify(mockUserRepository, times(1)).findUserById(anyString());
+        assertEquals(expectedResponse, actualResponse);
+    }
+
+    @Test
+    public void given_noQueryParams_handlerReturnsBadRequest() {
+        APIGatewayProxyRequestEvent mockRequestEvent = new APIGatewayProxyRequestEvent();
+        mockRequestEvent.withPath("/users");
+        mockRequestEvent.withHttpMethod("GET");
+        mockRequestEvent.withHeaders(null);
+        mockRequestEvent.withBody(null);
+        mockRequestEvent.withQueryStringParameters(null);
+
+        APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
+        expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+
+        APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
+
+        verify(mockUserRepository, times(0)).findUserById(anyString());
         assertEquals(expectedResponse, actualResponse);
     }
 }
