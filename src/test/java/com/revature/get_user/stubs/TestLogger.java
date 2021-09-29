@@ -2,6 +2,7 @@ package com.revature.get_user.stubs;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -21,6 +22,9 @@ public class TestLogger implements LambdaLogger {
         String logDirectoryPath = "src/test/resources/logs";
         String fileName = "" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-hh-mm-ss"));
         String filePath = logDirectoryPath + "/" + fileName + ".log";
+
+        // make directory if it doesn't exist
+        new File("src/test/resources/logs").mkdirs();
 
         try {
             logFileWriter = new FileWriter(filePath, true);
