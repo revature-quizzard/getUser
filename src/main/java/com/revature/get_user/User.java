@@ -3,12 +3,13 @@ package com.revature.get_user;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @DynamoDBTable(tableName = "Users")
 public class User {
 
@@ -20,10 +21,10 @@ public class User {
     private String username;
 
     @DynamoDBAttribute
-    private List<Object> favoriteSets;
+    private List<SetDocument> favoriteSets;
 
     @DynamoDBAttribute
-    private List<Object> createdSets;
+    private List<SetDocument> createdSets;
 
     @DynamoDBAttribute
     private String profilePicture;

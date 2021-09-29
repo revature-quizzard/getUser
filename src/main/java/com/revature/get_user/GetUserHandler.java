@@ -13,7 +13,15 @@ import java.util.Map;
 public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final Gson mapper = new GsonBuilder().setPrettyPrinting().create();
-    private final UserRepository userRepository = UserRepository.getInstance();
+    private final UserRepository userRepository;
+
+    public GetUserHandler() {
+        userRepository = new UserRepository();
+    }
+
+    public GetUserHandler(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     /**
      * This function takes in a user id as a query parameter. The id is used to query
