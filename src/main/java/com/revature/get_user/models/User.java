@@ -22,7 +22,7 @@ public class User {
     private int wins;
     private int losses;
     private String registration_date;
-    private List<String> gameRecord;
+    private List<String> gameRecords;
 
     public User() {
         super();
