@@ -18,7 +18,7 @@ public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEven
     private final UserRepository userRepository;
 
     public GetUserHandler() {
-        userRepository = UserRepository.getInstance();
+        userRepository = new UserRepository();
     }
 
     public GetUserHandler(UserRepository userRepository) {
