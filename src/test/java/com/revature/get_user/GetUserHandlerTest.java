@@ -63,7 +63,7 @@ public class GetUserHandlerTest {
                 .wins(0)
                 .losses(0)
                 .registration_date("valid")
-                .gameRecord(new ArrayList<>())
+                .gameRecords(new ArrayList<>())
                 .build();
 
         APIGatewayProxyRequestEvent mockRequestEvent = new APIGatewayProxyRequestEvent();
