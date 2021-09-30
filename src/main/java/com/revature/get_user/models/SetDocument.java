@@ -1,17 +1,18 @@
-package com.revature.get_user;
+package com.revature.get_user.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import lombok.Data;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 
 import java.util.List;
 
 @Data
-@DynamoDBDocument
+@DynamoDbBean
 public class SetDocument {
     private String id;
-    private String name;
+    private String set_name;
     private List<Tag> tags;
-    private boolean isPublic;
+    private boolean is_public;
+    private String author;
     private int views;
     private int plays;
     private int studies;
