@@ -7,6 +7,8 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.revature.get_user.models.User;
+import software.amazon.awssdk.http.HttpStatusCode;
 
 import java.util.Map;
 
@@ -16,7 +18,7 @@ public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEven
     private final UserRepository userRepository;
 
     public GetUserHandler() {
-        userRepository = new UserRepository();
+        userRepository = UserRepository.getInstance();
     }
 
     public GetUserHandler(UserRepository userRepository) {
@@ -24,8 +26,8 @@ public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEven
     }
 
     /**
-     * This function takes in a user id as a query parameter. The id is used to query
-     * DynamoDB and return a user with the matching id.
+     * Takes a user id as a query string parameter. The id is used to query the database and
+     * returns a user with the matching id. If the user isn't found, return a 400 level status code.
      *
      * @param requestEvent will contain query parameters for querying DynamoDB
      * @return
@@ -38,21 +40,29 @@ public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEven
         LambdaLogger logger = context.getLogger();
         logger.log("RECEIVED EVENT: " + requestEvent);
 
-        Map<String, String> pathParams = requestEvent.getQueryStringParameters();
+        // get the query string params
+        Map<String, String> queryStringParams = requestEvent.getQueryStringParameters();
 
-        if (pathParams == null) {
-            responseEvent.setStatusCode(400);
+        // checks if params are null - if null, return a 400 level status code
+        if (queryStringParams == null) {
+            responseEvent.setStatusCode(HttpStatusCode.BAD_REQUEST);
+            responseEvent.setBody("Missing query string - (ex. /users?id=valid_user_id)");
             return responseEvent;
         }
 
-        User user = userRepository.findUserById(pathParams.get("id"));
+        // attempt to find the User in the database
+        User user = userRepository.findUserById(queryStringParams.get("id"));
 
+        // map the user in response if available, else return a 400 level status code
         if (user != null) {
             responseEvent.setBody(mapper.toJson(user));
         } else {
-            responseEvent.setStatusCode(400);
+            responseEvent.setStatusCode(HttpStatusCode.NOT_FOUND);
+            responseEvent.setBody("No user with that id found");
+            return responseEvent;
         }
 
+        responseEvent.setStatusCode(HttpStatusCode.OK);
         return responseEvent;
     }
 }

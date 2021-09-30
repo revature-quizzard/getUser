@@ -5,6 +5,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.revature.get_user.models.User;
 import com.revature.get_user.stubs.TestLogger;
 import org.junit.jupiter.api.*;
 import software.amazon.awssdk.http.HttpStatusCode;
@@ -55,13 +56,13 @@ public class GetUserHandlerTest {
         User expectedUser = User.builder()
                 .id("valid")
                 .username("valid")
-                .favoriteSets(new ArrayList<>())
-                .createdSets(new ArrayList<>())
-                .profilePicture("valid")
+                .favorite_sets(new ArrayList<>())
+                .created_sets(new ArrayList<>())
+                .profile_picture("valid")
                 .points(0)
                 .wins(0)
                 .losses(0)
-                .registrationDate("valid")
+                .registration_date("valid")
                 .gameRecord(new ArrayList<>())
                 .build();
 
