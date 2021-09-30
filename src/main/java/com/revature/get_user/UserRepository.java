@@ -2,6 +2,7 @@ package com.revature.get_user;
 
 import com.revature.get_user.models.User;
 import lombok.SneakyThrows;
+import lombok.extern.flogger.Flogger;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Expression;
@@ -31,7 +32,13 @@ public class UserRepository {
         AttributeValue value = AttributeValue.builder().s(id).build();
         Expression filter = Expression.builder().expression("#a = :b").putExpressionName("#a", "id").putExpressionValue(":b", value).build();
         ScanEnhancedRequest request = ScanEnhancedRequest.builder().filterExpression(filter).build();
-        User user = userTable.scan(request).stream().findFirst().orElseThrow(RuntimeException::new).items().get(0);
-        return user;
+        try {
+            User user = userTable.scan(request).stream().findFirst().orElseThrow(RuntimeException::new).items().get(0);
+            return user;
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }
