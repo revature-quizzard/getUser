@@ -15,13 +15,13 @@ public class User {
 
     private String id;
     private String username;
-    private List<SetDocument> favorite_sets;
-    private List<SetDocument> created_sets;
-    private String profile_picture;
+    private List<SetDocument> favoriteSets;
+    private List<SetDocument> createdSets;
+    private String profilePicture;
     private int points;
     private int wins;
     private int losses;
-    private String registration_date;
+    private String registrationDate;
     private List<String> gameRecords;
 
     public User() {

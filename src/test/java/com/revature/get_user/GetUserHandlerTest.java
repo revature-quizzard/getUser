@@ -56,13 +56,13 @@ public class GetUserHandlerTest {
         User expectedUser = User.builder()
                 .id("valid")
                 .username("valid")
-                .favorite_sets(new ArrayList<>())
-                .created_sets(new ArrayList<>())
-                .profile_picture("valid")
+                .favoriteSets(new ArrayList<>())
+                .createdSets(new ArrayList<>())
+                .profilePicture("valid")
                 .points(0)
                 .wins(0)
                 .losses(0)
-                .registration_date("valid")
+                .registrationDate("valid")
                 .gameRecords(new ArrayList<>())
                 .build();
 

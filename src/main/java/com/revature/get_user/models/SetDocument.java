@@ -9,9 +9,9 @@ import java.util.List;
 @DynamoDbBean
 public class SetDocument {
     private String id;
-    private String set_name;
+    private String setName;
     private List<Tag> tags;
-    private boolean is_public;
+    private boolean isPublic;
     private String author;
     private int views;
     private int plays;
