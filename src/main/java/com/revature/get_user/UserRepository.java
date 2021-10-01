@@ -14,17 +14,12 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 public class UserRepository {
 
-    public static final UserRepository userRepository = new UserRepository();
     public final DynamoDbTable<User> userTable;
 
-    private UserRepository() {
+    public UserRepository() {
         DynamoDbClient db = DynamoDbClient.builder().httpClient(ApacheHttpClient.create()).build();
         DynamoDbEnhancedClient dbClient = DynamoDbEnhancedClient.builder().dynamoDbClient(db).build();
         userTable = dbClient.table("Users", TableSchema.fromBean(User.class));
-    }
-
-    public static UserRepository getInstance() {
-        return userRepository;
     }
 
     @SneakyThrows
@@ -35,9 +30,7 @@ public class UserRepository {
         try {
             User user = userTable.scan(request).stream().findFirst().orElseThrow(RuntimeException::new).items().get(0);
             return user;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }

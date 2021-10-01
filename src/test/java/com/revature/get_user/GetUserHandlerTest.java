@@ -76,6 +76,7 @@ public class GetUserHandlerTest {
         when(mockUserRepository.findUserById(anyString())).thenReturn(expectedUser);
 
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
+        expectedResponse.setStatusCode(HttpStatusCode.OK);
         expectedResponse.setBody(mapper.toJson(expectedUser));
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
@@ -96,7 +97,8 @@ public class GetUserHandlerTest {
         when(mockUserRepository.findUserById(anyString())).thenReturn(null);
 
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
-        expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+        expectedResponse.setStatusCode(HttpStatusCode.NOT_FOUND);
+        expectedResponse.setBody("No user with that id found");
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
@@ -115,6 +117,7 @@ public class GetUserHandlerTest {
 
         APIGatewayProxyResponseEvent expectedResponse = new APIGatewayProxyResponseEvent();
         expectedResponse.setStatusCode(HttpStatusCode.BAD_REQUEST);
+        expectedResponse.setBody("Missing query string - (ex. /users?id=valid_user_id)");
 
         APIGatewayProxyResponseEvent actualResponse = sut.handleRequest(mockRequestEvent, mockContext);
 
