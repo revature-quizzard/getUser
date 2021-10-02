@@ -36,6 +36,12 @@ public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEven
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent requestEvent, Context context) {
         APIGatewayProxyResponseEvent responseEvent = new APIGatewayProxyResponseEvent();
+        
+        // Setting Cors headers to bypass API Gateway Issue
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization");
+        headers.put("Access-Control-Allow-Origin", "*");
+        responseEvent.setHeaders(headers);
 
         LambdaLogger logger = context.getLogger();
         logger.log("RECEIVED EVENT: " + requestEvent);
