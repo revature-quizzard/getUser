@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.revature.get_user.models.User;
 import software.amazon.awssdk.http.HttpStatusCode;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class GetUserHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
